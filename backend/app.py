@@ -12,6 +12,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 homeworks = {}
 
 @app.post('/homeworks_add')
@@ -42,3 +43,11 @@ async def post_comment_template(text_template: Template):
 async def get_comment_template():
     return {"template": template}
 
+
+class User(BaseModel):
+    telegram_id: int
+    token: str
+
+@app.post('/create_user')
+def create_user(user: User):
+    print(f'user {user.telegram_id}, {user.token}')
