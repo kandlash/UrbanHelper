@@ -90,6 +90,7 @@ function addEventListenersToRows() {
                     console.log("Adding buttons after delay...");
                     addButton();
                     addCommentButton();
+                    makeGitHubLinksClickable();
                 }, 2000);
             });
 
@@ -97,6 +98,35 @@ function addEventListenersToRows() {
         }
     });
 }
+
+// Функция для поиска и обработки текста ссылок
+function makeGitHubLinksClickable() {
+    console.log('looking for github');
+    // Получаем все элементы <div> с классом tlk-homework__answer-text
+    const div = document.querySelector('.tlk-homework__answer-text');
+
+    if (!div) {
+        console.error('Element with class "tlk-homework__answer-text" not found');
+        return;
+    }
+
+    // Регулярное выражение для поиска ссылок, начинающихся с https://github.com
+    const githubLinkRegex = /https:\/\/github\.com\S+/g;
+    // Получаем текст внутри элемента <div>
+    let text = div.innerHTML;
+
+    // Заменяем все совпадения с регулярным выражением на кликабельные ссылки
+    text = text.replace(githubLinkRegex, match => {
+        return `<a target="_blank" href="${match}"><button>GitHub</button></a>`;
+    });
+    // Очищаем текст внутри элемента <div> и добавляем новый HTML-контент
+    div.innerHTML += text
+}
+
+
+// Вызываем функцию после загрузки страницы
+document.addEventListener('DOMContentLoaded', makeGitHubLinksClickable);
+
 
 function observeRows() {
     const observer = new MutationObserver((mutations) => {
