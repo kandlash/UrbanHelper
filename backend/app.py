@@ -1,8 +1,19 @@
 from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from contextlib import asynccontextmanager
+from fastapi import HTTPException
+
+from db import db
+from routers import homeworks, users
+
+from models import User, HomeWork
+from datetime import date
+
 
 app = FastAPI()
+app.include_router(users.router, prefix='/user', tags=["user"])
+app.include_router(homeworks.router, prefix='/homework', tags=['homeworks'])
 
 app.add_middleware(
     CORSMiddleware,
@@ -11,43 +22,3 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-homeworks = {}
-
-@app.post('/homeworks_add')
-async def homeworks_add():
-    if 'homeworks_count' in homeworks:
-        homeworks['homeworks_count'] += 1
-    else:
-        homeworks['homeworks_count'] = 1
-    return {"status": 'Added'}
-
-@app.get('/homeworks_get')
-async def homeworks_get():
-    return {"homeworks_count": homeworks.get('homeworks_count', 0)}
-
-
-class Template(BaseModel):
-    text_template: str
-
-template = ''
-@app.post('/post_comment_template')
-async def post_comment_template(text_template: Template):
-    global template
-    print(text_template)
-    template = text_template
-    return {'status': 'added template', 'template': template}
-
-@app.get('/get_comment_template')
-async def get_comment_template():
-    return {"template": template}
-
-
-class User(BaseModel):
-    telegram_id: int
-    token: str
-
-@app.post('/create_user')
-def create_user(user: User):
-    print(f'user {user.telegram_id}, {user.token}')

@@ -1,4 +1,8 @@
-import sqlite3
+from motor.motor_asyncio import AsyncIOMotorClient
+import os
+from dotenv import load_dotenv
 
-con = sqlite3.connect('urban.db')
-con.close()
+load_dotenv()
+MONGO_URI = os.getenv("MONGOURI")
+client = AsyncIOMotorClient(MONGO_URI)
+db = client.urban_work
