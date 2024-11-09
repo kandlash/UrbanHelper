@@ -1,25 +1,54 @@
 <!DOCTYPE html>
-
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homework Checker</title>
+    <title>Extension Popup</title>
     <style>
-      button {
-        padding: 10px;
-        font-size: 16px;
-        margin: 10px 0;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            width: 300px;
+        }
+        input[type="text"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        #profile-container, #login-container {
+            display: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
     </style>
-  </head>
-  <body>
-    <h1>Settings</h1>
-    <form id="templateForm">
-        <input type="text" name="text_template" placeholder="Введите текст шаблона" required>
-        <button type="submit">Отправить</button>
-    </form>
-    <script src="popup.js"></script>
-  </body>
-</html>
+</head>
+<body>
+    <!-- Login Form -->
+    <div id="login-container">
+        <h3>Enter your token</h3>
+        <input id="token-input" type="text" placeholder="Enter your token">
+        <button id="submit-token">Submit Token</button>
+        <p id="status"></p>
+    </div>
 
+    <!-- Profile Information -->
+    <div id="profile-container">
+        <h3>Welcome, User</h3>
+        <p id="homework-count">Homeworks today: 0</p>
+        <p id="current-template">Current Template: <span id="template-text">Not set</span></p>
+        <button id="change-template">Change Template</button>
+        <button id="change-token">Clear Token</button>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
