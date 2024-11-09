@@ -38,6 +38,7 @@ async def update_homework(token: str, date: str, count: int):
         raise HTTPException(404, 'User not found')
     
     homework = next((hw for hw in user.homeworks if hw.date == date), None)
-    if homework
+    if homework:
+        pass
     
     
