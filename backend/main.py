@@ -13,7 +13,7 @@ from datetime import date
 
 app = FastAPI()
 app.include_router(users.router, prefix='/user', tags=["user"])
-app.include_router(homeworks.router, prefix='/homework', tags=['homeworks'])
+app.include_router(homeworkss.router, prefix='/homework', tags=['homeworks'])
 
 app.add_middleware(
     CORSMiddleware,
